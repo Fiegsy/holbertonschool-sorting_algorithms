@@ -7,9 +7,9 @@
  */
 void swap(int *a, int *b)
 {
-	int temp = *a;
-	*a = *b;
-	*b = temp;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 /**
@@ -22,26 +22,26 @@ void swap(int *a, int *b)
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
-	int pivot = array[low + (high - low) / 2];
-	int i = low - 1;
-	int j = high + 1;
+    int pivot = array[low + (high - low) / 2];
+    int i = low - 1;
+    int j = high + 1;
 
-	while (1)
-	{
-		do {
-			i++;
-		} while (array[i] < pivot);
+    while (1)
+    {
+        do {
+            i++;
+        } while (array[i] < pivot);
 
-		do {
-			j--;
-		} while (array[j] > pivot);
+        do {
+            j--;
+        } while (array[j] > pivot);
 
-		if (i >= j)
-			return (j);
+        if (i >= j)
+            return (j);
 
-		swap(&array[i], &array[j]);
-		print_array(array, size);
-	}
+        swap(&array[i], &array[j]);
+        print_array(array, size);
+    }
 }
 
 /**
@@ -53,13 +53,13 @@ int hoare_partition(int *array, int low, int high, size_t size)
  */
 void quicksort_recursion(int *array, int low, int high, size_t size)
 {
-	if (low < high)
-	{
-		int pivot_index = hoare_partition(array, low, high, size);
+    if (low < high)
+    {
+        int pivot_index = hoare_partition(array, low, high, size);
 
-		quicksort_recursion(array, low, pivot_index, size);
-		quicksort_recursion(array, pivot_index + 1, high, size);
-	}
+        quicksort_recursion(array, low, pivot_index, size);
+        quicksort_recursion(array, pivot_index + 1, high, size);
+    }
 }
 
 /**
@@ -70,9 +70,9 @@ void quicksort_recursion(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
-		return;
+    if (array == NULL || size < 2)
+        return;
 
-	quicksort_recursion(array, 0, size - 1, size);
+    quicksort_recursion(array, 0, size - 1, size);
 }
 

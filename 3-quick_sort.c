@@ -2,9 +2,8 @@
 
 /**
  * swap - Swaps two integers in an array.
- *
- * @a: Pointer to the first integer to swap.
- * @b: Pointer to the second integer to swap.
+ * @a: Pointer to the first integer.
+ * @b: Pointer to the second integer.
  */
 void swap(int *a, int *b)
 {
@@ -15,13 +14,11 @@ void swap(int *a, int *b)
 
 /**
  * hoare_partition - Partitions the array using Hoare partition scheme.
- *
- * @array: The array to be sorted.
- * @low: The low index of the partition.
- * @high: The high index of the partition.
- * @size: The size of the array.
- *
- * Return: The pivot index.
+ * @array: Pointer to the array.
+ * @low: Starting index of the partition.
+ * @high: Ending index of the partition.
+ * @size: Size of array.
+ * Return: Index of the pivot element.
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
@@ -31,18 +28,16 @@ int hoare_partition(int *array, int low, int high, size_t size)
 
 	while (1)
 	{
-		do
-		{
+		do {
 			i++;
 		} while (array[i] < pivot);
 
-		do
-		{
+		do {
 			j--;
 		} while (array[j] > pivot);
 
 		if (i >= j)
-			return j;
+			return (j);
 
 		swap(&array[i], &array[j]);
 		print_array(array, size);
@@ -50,35 +45,34 @@ int hoare_partition(int *array, int low, int high, size_t size)
 }
 
 /**
- * quick_sort_recursive - Recursive function to sort an array using Quick sort.
- *
- * @array: The array to be sorted.
- * @low: The low index of the partition.
- * @high: The high index of the partition.
- * @size: The size of the array.
+ * quicksort_recursion - Recursive function to perform quick sort.
+ * @array: Pointer to the array.
+ * @low: Starting index of the partition.
+ * @high: Ending index of the partition.
+ * @size: Size of array.
  */
-void quick_sort_recursive(int *array, int low, int high, size_t size)
+void quicksort_recursion(int *array, int low, int high, size_t size)
 {
 	if (low < high)
 	{
 		int pivot_index = hoare_partition(array, low, high, size);
 
-		quick_sort_recursive(array, low, pivot_index, size);
-		quick_sort_recursive(array, pivot_index + 1, high, size);
+		quicksort_recursion(array, low, pivot_index, size);
+		quicksort_recursion(array, pivot_index + 1, high, size);
 	}
 }
 
 /**
- * quick_sort_hoare - Sorts an array of integers in ascending order using Quick sort (Hoare partition).
- *
- * @array: The array to be sorted.
- * @size: Number of elements in @array.
+ * quick_sort - Sorts an array in ascending order
+ * using the Quick sort algorithm (Hoare partition).
+ * @array: Pointer to the array.
+ * @size: Size of the array.
  */
-void quick_sort_hoare(int *array, size_t size)
+void quick_sort(int *array, size_t size)
 {
 	if (array == NULL || size < 2)
 		return;
 
-	quick_sort_recursive(array, 0, size - 1, size);
+	quicksort_recursion(array, 0, size - 1, size);
 }
 

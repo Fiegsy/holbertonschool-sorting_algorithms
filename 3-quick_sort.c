@@ -7,9 +7,9 @@
  */
 void swap(int *a, int *b)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 /**
@@ -22,28 +22,26 @@ void swap(int *a, int *b)
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
-    int pivot = array[low + (high - low) / 2];
-    int i = low - 1;
-    int j = high + 1;
+	int pivot = array[low + (high - low) / 2];
+	int i = low - 1;
+	int j = high + 1;
 
-    while (1)
-    {
-        do
-        {
-            i++;
-        } while (array[i] < pivot);
+	while (1)
+	{
+		do {
+			i++;
+		} while (array[i] < pivot);
 
-        do
-        {
-            j--;
-        } while (array[j] > pivot);
+		do {
+			j--;
+		} while (array[j] > pivot);
 
-        if (i >= j)
-            return j;
+		if (i >= j)
+			return j;
 
-        swap(&array[i], &array[j]);
-        print_array(array, size);
-    }
+		swap(&array[i], &array[j]);
+		print_array(array, size);
+	}
 }
 
 /**
@@ -55,13 +53,13 @@ int hoare_partition(int *array, int low, int high, size_t size)
  */
 void quicksort_recursion(int *array, int low, int high, size_t size)
 {
-    if (low < high)
-    {
-        int pivot_index = hoare_partition(array, low, high, size);
+	if (low < high)
+	{
+		int pivot_index = hoare_partition(array, low, high, size);
 
-        quicksort_recursion(array, low, pivot_index, size);
-        quicksort_recursion(array, pivot_index + 1, high, size);
-    }
+		quicksort_recursion(array, low, pivot_index, size);
+		quicksort_recursion(array, pivot_index + 1, high, size);
+	}
 }
 
 /**
@@ -72,9 +70,48 @@ void quicksort_recursion(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-    if (array == NULL || size < 2)
-        return;
+	if (array == NULL || size < 2)
+		return;
 
-    quicksort_recursion(array, 0, size - 1, size);
+	quicksort_recursion(array, 0, size - 1, size);
+}
+
+/**
+ * print_array - Prints an array of integers.
+ * @array: Pointer to the array.
+ * @size: Size of array.
+ */
+void print_array(const int *array, size_t size)
+{
+	size_t i;
+
+	if (array == NULL || size == 0)
+		return;
+
+	for (i = 0; i < size; i++)
+	{
+		if (i > 0)
+			printf(", ");
+		printf("%d", array[i]);
+	}
+	printf("\n");
+}
+
+int main(void)
+{
+	int array1[] = { /* Initialize your array for case 1 */ };
+	size_t size1 = sizeof(array1) / sizeof(array1[0]);
+
+	printf("Original array 1: ");
+	print_array(array1, size1);
+
+	quick_sort(array1, size1);
+
+	printf("Sorted array 1: ");
+	print_array(array1, size1);
+
+	// Repeat for other test cases (array2, array3, array4)
+
+	return (0);
 }
 

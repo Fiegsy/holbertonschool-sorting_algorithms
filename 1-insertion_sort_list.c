@@ -1,60 +1,43 @@
 #include "sort.h"
 
 /**
- * swap_nodes - Swap two nodes in a doubly linked list.
- *
- * @list: pointer to a pointer to the head of the linked list.
- * @first: first node to swap.
- * @second: second node to swap.
- */
-void swap_nodes(listint_t **list, listint_t *first, listint_t *second)
-{
-	if (first == NULL || second == NULL)
-		return;
-
-	if (first->prev != NULL)
-		first->prev->next = second;
-
-	if (second->next != NULL)
-		second->next->prev = first;
-
-	first->next = second->next;
-	second->prev = first->prev;
-	first->prev = second;
-	second->next = first;
-
-	if (*list == first)
-		*list = second;
-}
-
-/**
  * insertion_sort_list - Sorts a doubly linked list of integers
- *                       in ascending order using the Insertion sort algorithm.
+ *                       in ascending order using Insertion sort algorithm
  *
- * @list: pointer to a pointer to the head of the linked list.
+ * @list: Double pointer to the head of the list
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *current = NULL;
-	listint_t *previous = NULL;
+	listint_t *curr, *temp, *prev;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	current = (*list)->next;
-
-	while (current != NULL)
+	curr = (*list)->next;
+	while (curr != NULL)
 	{
-		previous = current->prev;
+		temp = curr->next;
+		prev = curr->prev;
 
-		while (previous != NULL && previous->n > current->n)
+		while (prev != NULL && prev->n > curr->n)
 		{
-			swap_nodes(list, previous, current);
-			print_list(*list);
-			previous = current->prev;
-		}
+			prev->next = curr->next;
 
-		current = current->next;
+			if (curr->next != NULL)
+				curr->next->prev = prev;
+
+			curr->next = prev;
+			curr->prev = prev->prev;
+			prev->prev = curr;
+
+			if (curr->prev != NULL)
+				curr->prev->next = curr;
+			else
+				*list = curr;
+
+			print_list(*list);
+			prev = curr->prev;
+		}
+		curr = temp;
 	}
 }
-

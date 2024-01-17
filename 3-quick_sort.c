@@ -14,7 +14,7 @@ void swap(int *a, int *b)
 }
 
 /**
- * lomuto_partition - Partitions the array using Lomuto partition scheme.
+ * hoare_partition - Partitions the array using Hoare partition scheme.
  *
  * @array: The array to be sorted.
  * @low: The low index of the partition.
@@ -23,31 +23,30 @@ void swap(int *a, int *b)
  *
  * Return: The pivot index.
  */
-int lomuto_partition(int *array, int low, int high, size_t size)
+int hoare_partition(int *array, int low, int high, size_t size)
 {
-	int pivot = array[high];
+	int pivot = array[low + (high - low) / 2];
 	int i = low - 1;
+	int j = high + 1;
 
-	for (int j = low; j <= high - 1; j++)
+	while (1)
 	{
-		if (array[j] < pivot)
+		do
 		{
 			i++;
-			if (i != j)
-			{
-				swap(&array[i], &array[j]);
-				print_array(array, size);
-			}
-		}
-	}
+		} while (array[i] < pivot);
 
-	if (array[i + 1] != array[high])
-	{
-		swap(&array[i + 1], &array[high]);
+		do
+		{
+			j--;
+		} while (array[j] > pivot);
+
+		if (i >= j)
+			return j;
+
+		swap(&array[i], &array[j]);
 		print_array(array, size);
 	}
-
-	return (i + 1);
 }
 
 /**
@@ -62,20 +61,20 @@ void quick_sort_recursive(int *array, int low, int high, size_t size)
 {
 	if (low < high)
 	{
-		int pivot_index = lomuto_partition(array, low, high, size);
+		int pivot_index = hoare_partition(array, low, high, size);
 
-		quick_sort_recursive(array, low, pivot_index - 1, size);
+		quick_sort_recursive(array, low, pivot_index, size);
 		quick_sort_recursive(array, pivot_index + 1, high, size);
 	}
 }
 
 /**
- * quick_sort - Sorts an array of integers in ascending order using Quick sort.
+ * quick_sort_hoare - Sorts an array of integers in ascending order using Quick sort (Hoare partition).
  *
  * @array: The array to be sorted.
  * @size: Number of elements in @array.
  */
-void quick_sort(int *array, size_t size)
+void quick_sort_hoare(int *array, size_t size)
 {
 	if (array == NULL || size < 2)
 		return;
